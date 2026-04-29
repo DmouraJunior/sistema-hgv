@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistema Integrado de Consulta de Servidores - HGV</title>
+<title>Sistema Integrado de Consulta de Servidores - DGF</title>
 
 <style>
 /* --- VARIÁVEIS DE CORES PARA MODO CLARO/ESCURO --- */
@@ -199,7 +199,7 @@ button { width: 100%; padding: 14px; border-radius: 8px; border: none; backgroun
 
 <div class="topbar">
     <div class="titulo-repo">
-        Hospital Getúlio Vargas - HGV <small>| Sistema Interno de Gestão de Dados</small>
+        Hospital Getúlio Vargas - DGF <small>| Sistema Interno de Gestão de Dados</small>
     </div>
     <button class="theme-toggle" onclick="toggleDarkMode()" title="Alternar Tema">🌓</button>
 </div>
@@ -226,7 +226,7 @@ button { width: 100%; padding: 14px; border-radius: 8px; border: none; backgroun
             <p style="font-size: 12px; margin-bottom: 15px; color: #666;">Primeiro acesso detectado.</p>
             <div class="pass-container">
                 <input type="password" id="novaSenha" placeholder="Nova senha">
-                <span class="toggle-eye" onclick="y⁶6y⁷('novaSenha')">👁️</span>
+                <span class="toggle-eye" onclick="verSenha('novaSenha')">👁️</span>
             </div>
             <div class="pass-container">
                 <input type="password" id="confirmaSenha" placeholder="Confirme a nova senha">
@@ -310,15 +310,15 @@ button { width: 100%; padding: 14px; border-radius: 8px; border: none; backgroun
 <div class="footer">© 2026 - SUPERINTENDÊNCIA ADMINISTRATIVA E FINANCEIRA (SAF)</div>
 
 <script>
-const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbwqzXGpoYMvzF-vzvW8EijzYVIkCXxzyamq4vSOYwWgixYoafK31flBmcogVyuH0YAo/exec";
+const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyNR_X_fE4G7LrjtSP4aGEZlmYFd_pzMs7bDzu8X-TdtWirJYGDP35vWJwjNs5b1fH4/exec";
 const TEMPO_EXPIRACAO = 30 * 60 * 1000;
 let cacheLogs = []; 
 
 const usuariosDB = [
-    { usuario: "admin", senha: "1234", primeiroAcesso: true, cargo: "Administrador" },
+    { usuario: "edson", senha: "1234", primeiroAcesso: true, cargo: "Administrador" },
     { usuario: "deny", senha: "1234", primeiroAcesso: true, cargo: "Superintendente Administrativo e Financeiro" },
-    { usuario: "mayara", senha: "1234", primeiroAcesso: true, cargo: "AOSD" },
-    { usuario: "edson", senha: "1234", primeiroAcesso: true, cargo: "Administrador" }
+    { usuario: "mayara", senha: "1234", primeiroAcesso: true, cargo: "Comissionadso" },
+    { usuario: "gabrielcosta", senha: "1234", primeiroAcesso: true, cargo: "Coordenador de Análise de Prestação de Contas - UPAE" }
 ];
 
 function toggleDarkMode() {
@@ -414,9 +414,13 @@ document.addEventListener("DOMContentLoaded", function() {
         pagina.forEach(f => {
             const fotoPadrao = 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
             const imgUrl = gerarLinkDireto(f.foto) || fotoPadrao;
+            // Captura o telefone da planilha (campo "Fone")
+            const telefone = f.fone || "Não disponível";
+
             html += `<div class="card-resultado">
                 <img src="${imgUrl}" style="width:70px; height:70px; border-radius:50%; float:right; border:3px solid #e2e8f0;" onerror="this.src='${fotoPadrao}'">
-                <span class="info-item">👤 <strong>${f.nome}</strong></span>`;            
+                <span class="info-item">👤 <strong>${f.nome}</strong></span>
+                <span class="info-item">📞 Fone: <strong>${telefone}</strong></span>`;            
             
             if (tipoConsultaAtual === "setor") html += `<span class="info-item">🏢 Setor: <strong>${f.setor}</strong></span>`;
             else if (tipoConsultaAtual === "cargo") html += `<span class="info-item">💼 Cargo: <strong>${f.cargo}</strong></span>`;
